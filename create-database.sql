@@ -1,0 +1,3 @@
+CREATE DATABASE food_api;
+
+CREATE USER food_admin SUPERUSER;
