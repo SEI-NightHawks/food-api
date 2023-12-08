@@ -3,14 +3,17 @@ from rest_framework import serializers
 from .models import Post, Comment, Like, UserProfile, User
 
 class UserSerializer(serializers.ModelSerializer):
+    profile_pic_url = serializers.CharField(write_only=True, required=False)
+
     class Meta:
         model = User
-        fields = ['id', 'username', 'password', 'email']
+        fields = ['id', 'username', 'password', 'email', 'profile_pic_url']
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
+        profile_pic_url = validated_data.pop('profile_pic_url', None)
         user = User.objects.create_user(**validated_data)
-        UserProfile.objects.create(user=user)  # Create UserProfile for the new user
+        UserProfile.objects.create(user=user, profile_pic_url=profile_pic_url)  # Create UserProfile for the new user
         return user
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -25,6 +28,12 @@ class PostSerializer(serializers.ModelSerializer):
     user_profile = serializers.PrimaryKeyRelatedField(
         queryset=UserProfile.objects.all(),
         write_only=True
+    )
+
+    post_likes = serializers.PrimaryKeyRelatedField(
+        many=True, 
+        queryset=UserProfile.objects.all(),
+        required=False  # This makes the field optional
     )
 
     # Override to_representation to control read operations
