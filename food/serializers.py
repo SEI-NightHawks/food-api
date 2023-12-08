@@ -10,21 +10,29 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
-        UserProfile.objects.create(user=user)
+        UserProfile.objects.create(user=user)  # Create UserProfile for the new user
         return user
 
 class UserProfileSerializer(serializers.ModelSerializer):
-
     user = UserSerializer(read_only=True)
 
     class Meta:
         model = UserProfile
         fields = '__all__'
 
-
 class PostSerializer(serializers.ModelSerializer):
-    user_profile = UserProfileSerializer()
-    
+    # Use PrimaryKeyRelatedField for write operations
+    user_profile = serializers.PrimaryKeyRelatedField(
+        queryset=UserProfile.objects.all(),
+        write_only=True
+    )
+
+    # Override to_representation to control read operations
+    def to_representation(self, instance):
+        representation = super(PostSerializer, self).to_representation(instance)
+        representation['user_profile'] = UserProfileSerializer(instance.user_profile).data
+        return representation
+
     class Meta:
         model = Post
         fields = '__all__'

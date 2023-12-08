@@ -13,9 +13,9 @@ class Post(models.Model):
     details = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
     post_likes = models.ManyToManyField(UserProfile, related_name='liked_posts')
+
     def __str__(self):
         return self.user_profile.user.username
-
 
 class Like(models.Model):
     user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
