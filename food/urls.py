@@ -1,10 +1,12 @@
 from django.urls import path
-from .views import CreateUserView, LoginView, UserProfileUpdateView, UserPostList, PostList, PostDetail, CommentList, CommentDetail
+from .views import CreateUserView, LoginView, UserProfileUpdateView, VerifyUserView, UserPostList, PostList, PostDetail, CommentList, CommentDetail
 
 urlpatterns = [
   # User routes
   path('users/register/', CreateUserView.as_view(), name='register'),
   path('users/login/', LoginView.as_view(), name='login'),
+  path('users/verify/', VerifyUserView.as_view(), name='verify_user'),
+
   path('user/profile/', UserProfileUpdateView.as_view(), name='user-profile-update'),
 
   # User Posts routes
