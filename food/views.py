@@ -52,6 +52,20 @@ class UserProfileUpdateView(generics.RetrieveUpdateAPIView):
         # Fetch the user profile of the currently authenticated user
         return self.request.user.userprofile
 
+
+class VerifyUserView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user_profile = UserProfile.objects.get(user=request.user)  # Fetch user profile
+        refresh = RefreshToken.for_user(request.user)  # Generate new refresh token
+        return Response({
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+            'user_profile': UserProfileSerializer(user_profile).data
+        })
+
+
 class UserPostList(generics.ListAPIView):
     serializer_class = PostSerializer
 
