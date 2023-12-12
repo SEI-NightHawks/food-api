@@ -1,9 +1,10 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from rest_framework import generics, permissions, status
+from rest_framework import generics, permissions, status, filters
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.exceptions import PermissionDenied
 from .models import UserProfile, Post, Comment, Like
 from .serializers import UserProfileSerializer, PostSerializer, CommentSerializer, LikeSerializer, UserSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -52,6 +53,20 @@ class UserProfileUpdateView(generics.RetrieveUpdateAPIView):
         # Fetch the user profile of the currently authenticated user
         return self.request.user.userprofile
 
+
+class VerifyUserView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user_profile = UserProfile.objects.get(user=request.user)  # Fetch user profile
+        refresh = RefreshToken.for_user(request.user)  # Generate new refresh token
+        return Response({
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+            'user_profile': UserProfileSerializer(user_profile).data
+        })
+
+
 class UserPostList(generics.ListAPIView):
     serializer_class = PostSerializer
 
@@ -61,7 +76,7 @@ class UserPostList(generics.ListAPIView):
         # Filter the posts by the user_profile_id
         return Post.objects.filter(user_profile=user_profile_id)
 
-# Blog Views (with protected POST route; requires token in header)
+# Post Views (with protected POST route; requires token in header)
 class PostList(generics.ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -97,6 +112,26 @@ class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
 
+class PostCommentList(generics.ListAPIView):
+    serializer_class = CommentSerializer
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['created_at']  # You can adjust the ordering based on your needs
+    # permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        post_id = self.kwargs['post_id']
+        return Comment.objects.filter(post=post_id)
+
+
+class CommentDelete(generics.DestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_destroy(self, instance):
+        if instance.user_profile.user != self.request.user:
+            raise PermissionDenied("You do not have permission to delete this comment.")
+        instance.delete()
 #Like Views
 class LikeViewSet(generics.RetrieveUpdateDestroyAPIView):
     queryset = Like.objects.all()
