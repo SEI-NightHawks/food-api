@@ -9,11 +9,17 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'username', 'password', 'email', 'profile_pic_url']
         extra_kwargs = {'password': {'write_only': True}}
-
+    
     def create(self, validated_data):
         profile_pic_url = validated_data.pop('profile_pic_url', None)
         user = User.objects.create_user(**validated_data)
-        UserProfile.objects.create(user=user, profile_pic_url=profile_pic_url)  # Create UserProfile for the new user
+        
+        # Create UserProfile for the new user with profile_pic_url
+        profile = UserProfile.objects.create(user=user)
+        if profile_pic_url:
+            profile.profile_pic_url = profile_pic_url
+            profile.save()
+
         return user
 
 class UserProfileSerializer(serializers.ModelSerializer):
