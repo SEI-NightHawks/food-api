@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-3jyby4q%s=9=a43md0=mp^ickuqr386)meh!+q7qyc_#ns5a$m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["munchmeet-api-904c970ee4a3.herokuapp.com"]
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
