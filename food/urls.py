@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import CreateUserView, LoginView, UserProfileUpdateView, VerifyUserView, UserPostList, PostList, PostDetail, PostCommentList, CommentList, CommentDetail, CommentDelete
+from .views import CreateUserView, LoginView, UserProfileUpdateView, VerifyUserView, UserPostList, PostList, PostDetail, PostCommentList, CommentList, CommentDetail, CommentDelete, CreateComment
 
 urlpatterns = [
   # User routes
@@ -21,6 +21,8 @@ urlpatterns = [
   path('comments/<int:pk>/', CommentDetail.as_view(), name='comment-detail'),  # Update and delete a specific comment
   path('posts/<int:post_id>/comments/', PostCommentList.as_view(), name='post-comment-list'), # Shows comments based on that specific post
   path('comments/<int:pk>/delete/', CommentDelete.as_view(), name='comment-delete'),
+    # Add a route to create a comment
+  path('posts/<int:post_id>/comments/create/', CreateComment.as_view(), name='comment-create'),
 
 ]
 
