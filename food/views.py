@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from rest_framework import generics, permissions, status, filters
+from rest_framework import generics, permissions, status, filters, serializers
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -132,6 +132,30 @@ class CommentDelete(generics.DestroyAPIView):
         if instance.user_profile.user != self.request.user:
             raise PermissionDenied("You do not have permission to delete this comment.")
         instance.delete()
+
+class CreateComment(generics.CreateAPIView):
+    serializer_class = CommentSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        print("Performing create...")
+        print(f"Request Data: {self.request.data}")
+        print(f"POST data: {self.request.POST}")
+        print(f"POST data (JSON): {self.request.POST.dict()}")
+        
+        try:
+            serializer.is_valid(raise_exception=True)
+        except serializers.ValidationError as e:
+            print(f"Serializer Validation Error: {e.detail}")
+            raise e
+
+        serializer.save(user_profile=self.request.user.userprofile, post_id=self.kwargs['post_id'])
+
+
+
+
+
+
 #Like Views
 class LikeViewSet(generics.RetrieveUpdateDestroyAPIView):
     queryset = Like.objects.all()

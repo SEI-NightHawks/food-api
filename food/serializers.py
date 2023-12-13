@@ -50,16 +50,31 @@ class CommentSerializer(serializers.ModelSerializer):
     user_profile = serializers.PrimaryKeyRelatedField(
         queryset=UserProfile.objects.all(),
         write_only=True
+        
     )
+
+    post = serializers.PrimaryKeyRelatedField(
+        queryset=Post.objects.all(),
+        write_only=True
+    )
+
 
     def to_representation(self, instance):
         representation = super(CommentSerializer, self).to_representation(instance)
         representation['user_profile'] = UserProfileSerializer(instance.user_profile).data
+        representation['post'] = PostSerializer(instance.post).data
         return representation
 
     class Meta:
         model = Comment
         fields = '__all__'
+
+
+# class CreateCommentSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Comment
+#         fields = ['post', 'comment']
+
 
 class LikeSerializer(serializers.ModelSerializer):
     class Meta:
