@@ -2,6 +2,10 @@
 
 This README provides an overview of the Django backend for a blog application. The provided code includes views, URLs, and serializers for managing user profiles, posts, comments, and likes.
 
+### Deployed Site
+https://munch-meet.netlify.app/feed
+
+
 ### Team Members
 <img src="ReadmeImages/T0351JZQ0-U05JL6LL5A8-0e474603f175-512.png"  width="30" height="30">  Chris Hercules (github: https://github.com/christopher19)
 
