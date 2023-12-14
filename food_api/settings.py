@@ -30,7 +30,7 @@ DEBUG = True
 ALLOWED_HOSTS = ["munchmeet-api-904c970ee4a3.herokuapp.com"]
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
+    'http://localhost:3000','https://munch-meet.netlify.app'
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
