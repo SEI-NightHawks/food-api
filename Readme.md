@@ -3,21 +3,21 @@
 This README provides an overview of the Django backend for a blog application. The provided code includes views, URLs, and serializers for managing user profiles, posts, comments, and likes.
 
 ### Team Members
-<img src="ReadmeImages/T0351JZQ0-U05JL6LL5A8-0e474603f175-512.png"  width="30" height="30">  Chris Hercules (github: https://github.com/???    )
+<img src="ReadmeImages/T0351JZQ0-U05JL6LL5A8-0e474603f175-512.png"  width="30" height="30">  Chris Hercules (github: https://github.com/christopher19)
 
-<img src="ReadmeImages/T0351JZQ0-U05QYAYE86B-1d4a9d9e85cd-72.png"  width="30" height="30">  Elisa Potillo (github: https://github.com/???    )
+<img src="ReadmeImages/T0351JZQ0-U05QYAYE86B-1d4a9d9e85cd-72.png"  width="30" height="30">  Elisa Potillo (github: https://github.com/elisacris98)
 
-<img src="ReadmeImages/T0351JZQ0-U05QZ7VBNQG-c4f2d7c7fbf4-512.png"  width="30" height="30">  Jeanpierre Capunay (github: https://github.com/???    )
+<img src="ReadmeImages/T0351JZQ0-U05QZ7VBNQG-c4f2d7c7fbf4-512.png"  width="30" height="30">  Jeanpierre Capunay (github: https://github.com/jpcapunay)
 
-<img src="ReadmeImages/110782743-2.png"  width="30" height="30">  Manasavi Saluja (github: https://github.com/???    )
+<img src="ReadmeImages/110782743-2.png"  width="30" height="30">  Manasavi Saluja (github: https://github.com/mosmoo)
 
-<img src="ReadmeImages/T0351JZQ0-U05QZ7WDK6C-868bfc71e1bc-512.png"  width="30" height="30">  Ryan Gelman (github: https://github.com/???    )
+<img src="ReadmeImages/IMG_7681 copy.jpg"  width="30" height="30">  Ryan Gelman (github: https://github.com/ryangelman) 
 
 <img src="ReadmeImages/T0351JZQ0-U05QN5UN857-7c2e3de4d611-72.jpeg"  width="30" height="30">  Stuart Shapiro (github: https://github.com/sbshap828)
 
-<img src="ReadmeImages/T0351JZQ0-U05QZ7WDK6C-868bfc71e1bc-72.png"  width="30" height="30">  Sara Mejia (github: https://github.com/???8)
+<img src="ReadmeImages/T0351JZQ0-U05QZ7WDK6C-868bfc71e1bc-72.png"  width="30" height="30">  Sara Mejia (github: https://github.com/saramejia)
 
-<img src="ReadmeImages/T0351JZQ0-U05S5H67CP3-80c403ec2a12-72-2.png"  width="30" height="30">  Titus Hull Faulkner (github: https://github.com/Empairim    )
+<img src="ReadmeImages/T0351JZQ0-U05S5H67CP3-80c403ec2a12-72-2.png"  width="30" height="30">  Titus Hull Faulkner (github: https://github.com/Empairim)
 
 
 
@@ -36,8 +36,6 @@ This README provides an overview of the Django backend for a blog application. T
 | Dec 12| Debugging | Complete |
 | Dec 13| Testing and Documentation Update| Complete |
 | Dec 14| Presentation | Incomplete |
-
-
 
 
 
@@ -71,11 +69,11 @@ This README provides an overview of the Django backend for a blog application. T
 
 ### Like Routes
 
-- `GET /likes/`: Retrieve all likes. [Not implemented]
-- `POST /likes/`: Create a new like (requires authentication). [Not implemented]
-- `GET /likes/<int:pk>/`: Retrieve a specific like by ID. [Not implemented]
-- `PUT /likes/<int:pk>/`: Update a specific like by ID (requires authentication). [Not implemented]
-- `DELETE /likes/<int:pk>/`: Delete a specific like by ID (requires authentication). [Not implemented]
+- `GET /likes/`: Retrieve all likes. 
+- `POST /likes/`: Create a new like (requires authentication). 
+- `GET /likes/<int:pk>/`: Retrieve a specific like by ID. 
+- `PUT /likes/<int:pk>/`: Update a specific like by ID (requires authentication).
+- `DELETE /likes/<int:pk>/`: Delete a specific like by ID (requires authentication). 
 
 ## Code Structure
 
@@ -94,11 +92,9 @@ To run the Django application, use the `manage.py` script:
 2.  CD into the directory
 3.  pipenv install
 4.  pip env shell
-5.  posql -p create-database
+5.  psql -p create-database
 6.  python manage.py migrate
 7.  python manage.py makemigtations
 8.  python manage.py runserver
-9.  This ruuns from localhost 8000
+9.  This runs from localhost 8000
 
-### File Schemas
-iuuig
